@@ -26,26 +26,33 @@ impl Queue {
     }
 }
 
-fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
+fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> thread::JoinHandle<()> {
     let qc = Arc::new(q);
     let qc1 = Arc::clone(&qc);
     let qc2 = Arc::clone(&qc);
+    let tx1 = tx.clone(); // Clone the sender for the first thread
+    let tx2 = tx;         // Use the original sender for the second thread
 
-    thread::spawn(move || {
+    let handle1 = thread::spawn(move || {
         for val in &qc1.first_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            tx1.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
+        // Drop tx1 here implicitly when the thread ends
     });
 
-    thread::spawn(move || {
+    let handle2 = thread::spawn(move || {
         for val in &qc2.second_half {
             println!("sending {:?}", val);
-            tx.send(*val).unwrap();
+            tx2.send(*val).unwrap();
             thread::sleep(Duration::from_secs(1));
         }
+        // Drop tx2 here implicitly when the thread ends
     });
+
+    // For simplicity, return one handle; we'll join it in main
+    handle1
 }
 
 fn main() {
@@ -53,7 +60,7 @@ fn main() {
     let queue = Queue::new();
     let queue_length = queue.length;
 
-    send_tx(queue, tx);
+    let handle = send_tx(queue, tx);
 
     let mut total_received: u32 = 0;
     for received in rx {
@@ -61,6 +68,8 @@ fn main() {
         total_received += 1;
     }
 
+    handle.join().unwrap(); // Ensure the threads finish
+
     println!("total numbers received: {}", total_received);
-    assert_eq!(total_received, queue_length)
+    assert_eq!(total_received, queue_length);
 }
