@@ -5,6 +5,7 @@
 
 
 fn main() {
-    let x: i32 = 10;
+    let x: i32;  // Type specified
+    x = 10;      // Assigned later
     println!("Number {}", x);
 }

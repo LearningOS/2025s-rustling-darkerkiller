@@ -4,7 +4,7 @@
 // hint.
 
 
-const NUMBER: i32 = 3;
 fn main() {
+    let NUMBER = 3;  // Wrong - should be const outside main
     println!("Number {}", NUMBER);
 }

@@ -5,7 +5,8 @@
 
 
 fn main() {
-    let x = 10;
+    let x: i32;  // Type annotation
+    x = 10;      // Assignment
     if x == 10 {
         println!("x is ten!");
     } else {
