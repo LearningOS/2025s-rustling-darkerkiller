@@ -19,11 +19,11 @@ mod tests {
 
     #[test]
     fn is_true_when_even() {
-        assert!();
+        assert!(is_even(4)); // Tests that 4 (an even number) returns true
     }
 
     #[test]
     fn is_false_when_odd() {
-        assert!();
+        assert!(!is_even(5)); // Tests that 5 (an odd number) returns false
     }
 }

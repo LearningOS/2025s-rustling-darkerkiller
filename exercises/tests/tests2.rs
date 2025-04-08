@@ -12,6 +12,7 @@
 mod tests {
     #[test]
     fn you_can_assert_eq() {
-        assert_eq!();
+        assert_eq!(2 + 2, 4); // This will compile and pass
+        // To make it fail, you could use: assert_eq!(2 + 2, 5);
     }
 }
