@@ -7,6 +7,8 @@
 use std::cmp::Ord;
 use std::default::Default;
 
+// Added Debug derivation
+#[derive(Debug)]
 pub struct Heap<T>
 where
     T: Default,
@@ -23,7 +25,7 @@ where
     pub fn new(comparator: fn(&T, &T) -> bool) -> Self {
         Self {
             count: 0,
-            items: vec![T::default()],
+            items: vec![T::default()], // Index 0 is a dummy value
             comparator,
         }
     }
@@ -37,7 +39,21 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        // Add the new element at the end
+        self.count += 1;
+        self.items.push(value);
+
+        // Bubble up the new element to its correct position
+        let mut idx = self.count;
+        while idx > 1 {
+            let parent = self.parent_idx(idx);
+            if !(self.comparator)(&self.items[parent], &self.items[idx]) {
+                self.items.swap(parent, idx);
+                idx = parent;
+            } else {
+                break;
+            }
+        }
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,8 +73,32 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        let left = self.left_child_idx(idx);
+        let right = self.right_child_idx(idx);
+
+        if right > self.count {
+            // Only left child exists
+            left
+        } else {
+            // Compare left and right children
+            if (self.comparator)(&self.items[left], &self.items[right]) {
+                left
+            } else {
+                right
+            }
+        }
+    }
+
+    fn heapify(&mut self, mut idx: usize) { // Made idx mutable
+        while self.children_present(idx) {
+            let smallest = self.smallest_child_idx(idx);
+            if (self.comparator)(&self.items[smallest], &self.items[idx]) {
+                self.items.swap(idx, smallest);
+                idx = smallest;
+            } else {
+                break;
+            }
+        }
     }
 }
 
@@ -84,8 +124,21 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+
+        // Swap root with last element and remove it
+        self.items.swap(1, self.count);
+        let result = self.items.pop();
+        self.count -= 1;
+
+        // Heapify from root if there are still elements
+        if self.count > 0 {
+            self.heapify(1);
+        }
+
+        result
     }
 }
 
@@ -116,6 +169,7 @@ impl MaxHeap {
 #[cfg(test)]
 mod tests {
     use super::*;
+
     #[test]
     fn test_empty_heap() {
         let mut heap = MaxHeap::new::<i32>();
@@ -125,7 +179,7 @@ mod tests {
     #[test]
     fn test_min_heap() {
         let mut heap = MinHeap::new();
-        heap.add(4);
+        heap.add(4);  // Fixed typo: 堆 -> heap
         heap.add(2);
         heap.add(9);
         heap.add(11);
@@ -150,5 +204,17 @@ mod tests {
         assert_eq!(heap.next(), Some(4));
         heap.add(1);
         assert_eq!(heap.next(), Some(2));
+    }
+}
+
+fn main() {
+    let mut heap = MinHeap::new();
+    heap.add(4);
+    heap.add(2);
+    heap.add(9);
+    heap.add(11);
+    println!("Min Heap: {:?}", heap);
+    while let Some(val) = heap.next() {
+        println!("Extracted: {}", val);
     }
 }

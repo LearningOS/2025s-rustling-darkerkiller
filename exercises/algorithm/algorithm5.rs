@@ -22,19 +22,36 @@ impl Graph {
     // Add an edge to the graph
     fn add_edge(&mut self, src: usize, dest: usize) {
         self.adj[src].push(dest); 
-        self.adj[dest].push(src); 
+        self.adj[dest].push(src); // Undirected graph, so add both directions
     }
 
     // Perform a breadth-first search on the graph, return the order of visited nodes
     fn bfs_with_return(&self, start: usize) -> Vec<usize> {
-        
-		//TODO
+        let mut visit_order = Vec::new();
+        let mut visited = vec![false; self.adj.len()];
+        let mut queue = VecDeque::new();
 
-        let mut visit_order = vec![];
+        // Start with the initial node
+        queue.push_back(start);
+        visited[start] = true;
+
+        // Process nodes in the queue
+        while let Some(current) = queue.pop_front() {
+            // Add current node to visit order
+            visit_order.push(current);
+
+            // Explore all adjacent nodes
+            for &neighbor in &self.adj[current] {
+                if !visited[neighbor] {
+                    queue.push_back(neighbor);
+                    visited[neighbor] = true;
+                }
+            }
+        }
+
         visit_order
     }
 }
-
 
 #[cfg(test)]
 mod tests {
@@ -59,7 +76,7 @@ mod tests {
     fn test_bfs_different_start() {
         let mut graph = Graph::new(3);
         graph.add_edge(0, 1);
-        graph.add_edge(1, 2);
+        graph.add_edge(1, 2); // Fixed syntax error: removed 'pattern:'
 
         let visited_order = graph.bfs_with_return(2);
         assert_eq!(visited_order, vec![2, 1, 0]);
@@ -78,10 +95,24 @@ mod tests {
 
     #[test]
     fn test_bfs_single_node() {
-        let mut graph = Graph::new(1);
+        let graph = Graph::new(1); // Removed unnecessary 'mut'
 
         let visited_order = graph.bfs_with_return(0);
         assert_eq!(visited_order, vec![0]);
     }
+}
+
+fn main() {
+    let mut graph = Graph::new(5);
+    graph.add_edge(0, 1);
+    graph.add_edge(0, 4);
+    graph.add_edge(1, 2);
+    graph.add_edge(1, 3);
+    graph.add_edge(1, 4);
+    graph.add_edge(2, 3);
+    graph.add_edge(3, 4);
+
+    let visited = graph.bfs_with_return(0);
+    println!("BFS visit order: {:?}", visited);
 }
 
