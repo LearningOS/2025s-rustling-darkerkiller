@@ -14,13 +14,13 @@
 use std::f32;
 
 fn main() {
-    let pi = 3.14f32;
-    let radius = 5.00f32;
+    let pi = f32::consts::PI;    // Changed from 3.14f32 to use the built-in PI constant
+    let radius = 5.0f32;        // Changed 5.00f32 to 5.0f32 (trailing zeros not needed)
 
-    let area = pi * f32::powi(radius, 2);
+    let area = pi * radius.powi(2);  // Simplified f32::powi(radius, 2) to radius.powi(2)
 
     println!(
         "The area of a circle with radius {:.2} is {:.5}!",
         radius, area
-    )
+    );
 }

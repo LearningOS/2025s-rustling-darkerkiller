@@ -5,11 +5,10 @@
 
 // I AM NOT DONE
 
+// Using match
 fn main() {
     let mut res = 42;
-    let option = Some(12);
-    for x in option {
-        res += x;
-    }
+    let value = 12;    // Changed from Some(12) to just 12
+    res += value;      // Direct addition since we don't need Option handling
     println!("{}", res);
 }

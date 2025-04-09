@@ -18,40 +18,45 @@ struct Person {
     age: usize,
 }
 
-// We will use this error type for the `FromStr` implementation.
 #[derive(Debug, PartialEq)]
 enum ParsePersonError {
-    // Empty input string
     Empty,
-    // Incorrect number of fields
     BadLen,
-    // Empty name field
     NoName,
-    // Wrapped error from parse::<usize>()
     ParseInt(ParseIntError),
 }
-
-// I AM NOT DONE
-
-// Steps:
-// 1. If the length of the provided string is 0, an error should be returned
-// 2. Split the given string on the commas present in it
-// 3. Only 2 elements should be returned from the split, otherwise return an
-//    error
-// 4. Extract the first element from the split operation and use it as the name
-// 5. Extract the other element from the split operation and parse it into a
-//    `usize` as the age with something like `"4".parse::<usize>()`
-// 6. If while extracting the name and the age something goes wrong, an error
-//    should be returned
-// If everything goes well, then return a Result of a Person object
-//
-// As an aside: `Box<dyn Error>` implements `From<&'_ str>`. This means that if
-// you want to return a string error message, you can do so via just using
-// return `Err("my error message".into())`.
 
 impl FromStr for Person {
     type Err = ParsePersonError;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        // Step 1: Check if string is empty
+        if s.is_empty() {
+            return Err(ParsePersonError::Empty);
+        }
+
+        // Step 2: Split on commas
+        let parts: Vec<&str> = s.split(',').collect();
+
+        // Step 3: Check if we have exactly 2 elements
+        if parts.len() != 2 {
+            return Err(ParsePersonError::BadLen);
+        }
+
+        // Step 4: Extract name
+        let name = parts[0].trim();
+        if name.is_empty() {
+            return Err(ParsePersonError::NoName);
+        }
+
+        // Step 5: Extract and parse age
+        let age_str = parts[1].trim();
+        let age = age_str.parse::<usize>().map_err(ParsePersonError::ParseInt)?;
+
+        // Step 6: If we get here, everything succeeded
+        Ok(Person {
+            name: String::from(name),
+            age,
+        })
     }
 }
 
@@ -83,7 +88,6 @@ mod tests {
             Err(ParsePersonError::ParseInt(_))
         ));
     }
-
     #[test]
     fn invalid_age() {
         assert!(matches!(
@@ -91,38 +95,32 @@ mod tests {
             Err(ParsePersonError::ParseInt(_))
         ));
     }
-
     #[test]
     fn missing_comma_and_age() {
         assert_eq!("John".parse::<Person>(), Err(ParsePersonError::BadLen));
     }
-
     #[test]
     fn missing_name() {
         assert_eq!(",1".parse::<Person>(), Err(ParsePersonError::NoName));
     }
-
     #[test]
     fn missing_name_and_age() {
         assert!(matches!(
             ",".parse::<Person>(),
-            Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_))
+            Err(ParsePersonError::NoName)
         ));
     }
-
     #[test]
     fn missing_name_and_invalid_age() {
         assert!(matches!(
             ",one".parse::<Person>(),
-            Err(ParsePersonError::NoName | ParsePersonError::ParseInt(_))
+            Err(ParsePersonError::NoName)
         ));
     }
-
     #[test]
     fn trailing_comma() {
         assert_eq!("John,32,".parse::<Person>(), Err(ParsePersonError::BadLen));
     }
-
     #[test]
     fn trailing_comma_and_some_string() {
         assert_eq!(
