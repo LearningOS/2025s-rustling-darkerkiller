@@ -40,4 +40,4 @@ fn main() {
     }
     // Print the final value after all threads have finished
     println!("jobs completed {}", status.lock().unwrap().jobs_completed);
-}
+}    
