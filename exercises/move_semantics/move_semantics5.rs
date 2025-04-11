@@ -8,11 +8,13 @@
 
 fn main() {
     let mut x = 100;
-    let y = &mut x;
-    *y += 100;
-    // 这里 y 的作用域结束，x 的可变借用结束
+    {
+        let y = &mut x;
+        *y += 100;
+        // 让 y 在这个代码块结束时超出作用域
+    }
     assert_eq!(x, 200);
     let z = &mut x;
     *z += 1000;
     assert_eq!(x, 1200);
-}    
+}            
