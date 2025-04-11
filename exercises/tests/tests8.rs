@@ -9,16 +9,17 @@
 
 // I AM NOT DONE
 
-// build.rs
+fn main() {}
 
-fn main() {
-    // Required for tests7.rs: Set TEST_FOO environment variable with timestamp
-    let timestamp = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
-        .as_secs();
-    println!("cargo:rustc-env=TEST_FOO={}", timestamp);
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    // Required for tests8.rs: Enable the "pass" feature
-    println!("cargo:rustc-cfg=feature=\"pass\"");
+    #[test]
+    fn test_success() {
+        #[cfg(feature = "pass")]
+        return;
+
+        panic!("no cfg set");
+    }
 }

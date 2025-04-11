@@ -2,16 +2,16 @@
 //!
 //! You should modify this file to make both exercises pass.
 
+use std::time::{SystemTime, UNIX_EPOCH};
+
 fn main() {
-    // For tests7: Set the environment variable TEST_FOO to the current timestamp
-    let timestamp = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
+    // For tests7: Set TEST_FOO to the current timestamp
+    let timestamp = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards")
         .as_secs();
-    let your_command = format!("rustc-env=TEST_FOO={}", timestamp);
-    println!("cargo:{}", your_command);
+    println!("cargo:rustc-env=TEST_FOO={}", timestamp);
 
     // For tests8: Enable the "pass" feature
-    let your_command = "rustc-cfg=feature=\"pass\"";
-    println!("cargo:{}", your_command);
+    println!("cargo:rustc-cfg=feature=\"pass\"");
 }    
