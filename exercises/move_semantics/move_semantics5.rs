@@ -7,13 +7,12 @@
 // for a hint.
 
 fn main() {
-    let mut x = 100;              // Line 1
-    {                             // Line 2
-        let y = &mut x;           // Line 3
-        *y += 100;                // Line 4
-    }                             // Line 5
-    assert_eq!(x, 200);           // Line 6
-    let z = &mut x;               // Line 7
-    *z += 1000;                   // Line 8
-    assert_eq!(x, 1200);          // Line 9
-}                
+    let mut x = 100;
+    let y = &mut x;
+    *y += 100;
+    // 在 y 不再使用之后，再创建 z 指向 x
+    drop(y); 
+    let z = &mut x;
+    *z += 1000;
+    assert_eq!(x, 1200);
+}           

@@ -11,10 +11,10 @@ struct Point {
 fn main() {
     let y: Option<Point> = Some(Point { x: 100, y: 200 });
 
-    match y {
+    match &y {
         Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
-        None => println!("No valid point provided."),
+        _ => panic!("no match!"),
     }
-    let _ = y;
-}
+    y; // 现在不会报错，因为 y 的所有权没有被消耗
+}    
     
