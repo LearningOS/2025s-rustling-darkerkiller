@@ -27,6 +27,9 @@
 /// # Safety
 ///
 /// The `address` must contain a mutable reference to a valid `u32` value.
+/// # Safety
+///
+/// The `address` must contain a mutable reference to a valid `u32` value.
 unsafe fn modify_by_address(address: usize) {
     // SAFETY: We assume the address points to a valid mutable u32 as per the
     // function's safety contract. We convert the usize to a raw pointer and
@@ -49,4 +52,4 @@ mod tests {
         unsafe { modify_by_address(&mut t as *mut u32 as usize) };
         assert!(t == 0xAABBCCDD);
     }
-}
+}    
