@@ -25,3 +25,28 @@ fn sale_price(price: i32) -> i32 {
 fn is_even(num: i32) -> bool {
     num % 2 == 0
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_even() {
+        assert!(is_even(2));
+        assert!(!is_even(3));
+    }
+
+    #[test]
+    fn test_sale_price_even() {
+        let original_price = 20;
+        let expected_price = original_price - 10;
+        assert_eq!(sale_price(original_price), expected_price);
+    }
+
+    #[test]
+    fn test_sale_price_odd() {
+        let original_price = 21;
+        let expected_price = original_price - 3;
+        assert_eq!(sale_price(original_price), expected_price);
+    }
+}
