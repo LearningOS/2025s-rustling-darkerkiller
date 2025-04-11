@@ -32,14 +32,16 @@ mod my_module {
     use super::Command;
 
     pub fn transformer(input: Vec<(String, Command)>) -> Vec<String> {
-        input
-            .into_iter()
-            .map(|(string, command)| match command {
+        let mut output: Vec<String> = vec![];
+        for (string, command) in input.iter() {
+            let result = match command {
                 Command::Uppercase => string.to_uppercase(),
                 Command::Trim => string.trim().to_string(),
-                Command::Append(n) => string + &"bar".repeat(n),
-            })
-            .collect()
+                Command::Append(n) => format!("{}{}", string, "bar".repeat(*n)),
+            };
+            output.push(result);
+        }
+        output
     }
 }
 
