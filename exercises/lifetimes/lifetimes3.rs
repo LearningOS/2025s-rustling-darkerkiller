@@ -5,11 +5,10 @@
 // Execute `rustlings hint lifetimes3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
-struct Book {
-    author: &str,
-    title: &str,
+// 为结构体的引用字段添加生命周期注解
+struct Book<'a> {
+    author: &'a str,
+    title: &'a str,
 }
 
 fn main() {
@@ -18,4 +17,4 @@ fn main() {
     let book = Book { author: &name, title: &title };
 
     println!("{} by {}", book.title, book.author);
-}
+}    
