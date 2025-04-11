@@ -9,5 +9,5 @@ fn main() {
 }
 
 fn call_me() {
-
+    // Function body can be empty or include code as needed
 }

@@ -37,10 +37,15 @@ fn fruit_basket(basket: &mut HashMap<Fruit, u32>) {
     ];
 
     for fruit in fruit_kinds {
-        // TODO: Insert new fruits if they are not already present in the
-        // basket. Note that you are not allowed to put any type of fruit that's
-        // already present!
+        // Insert new fruits if they are not already present in the basket
+        // Only add Banana and Pineapple, as Apple, Mango, and Lychee are already present
+        if !basket.contains_key(&fruit) {
+            basket.insert(fruit, 1);
+        }
     }
+
+    // Ensure total is greater than 11
+    // Current total: Apple (4) + Mango (2) + Lychee (5) + Banana (1) + Pineapple (1) = 13
 }
 
 #[cfg(test)]
