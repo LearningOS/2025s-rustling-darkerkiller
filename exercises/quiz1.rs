@@ -16,12 +16,13 @@
 
 // Put your function here!
 // Put your function here!
-fn calculate_price_of_apples(number: i32) -> i32 {
+// quiz1.rs
 
-    if number > 40 {
-        number
-    } else {
+fn calculate_price_of_apples(number: i32) -> i32 {
+    if number <= 40 {
         number * 2
+    } else {
+        number
     }
 }
 
