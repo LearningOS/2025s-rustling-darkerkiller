@@ -4,6 +4,7 @@
 // hint.
 
 // I AM NOT DONE
+
 #[cfg(test)]
 mod tests {
     #[test]
@@ -11,7 +12,7 @@ mod tests {
         let target = "rustlings";
         let optional_target = Some(target);
 
-        // 使用 if let 语句
+        // Use if let to destructure optional_target
         if let Some(word) = optional_target {
             assert_eq!(word, target);
         }
@@ -28,7 +29,7 @@ mod tests {
 
         let mut cursor = range;
 
-        // 使用 while let 语句
+        // Use while let to handle nested Options from pop()
         while let Some(Some(integer)) = optional_integers.pop() {
             assert_eq!(integer, cursor);
             cursor -= 1;

@@ -17,6 +17,6 @@ fn main() {
         Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
         _ => panic!("no match!"),
     }
-    y; // 现在不会报错，因为 y 的所有权没有被消耗
+    y; // Now compiles because y is not moved
 }    
     
