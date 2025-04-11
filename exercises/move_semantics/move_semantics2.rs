@@ -1,6 +1,11 @@
 // move_semantics2.rs
 //
-// Alternative implementation using a clone to preserve vec0
+// Expected output:
+// vec0 has length 3, with contents `[22, 44, 66]`
+// vec1 has length 4, with contents `[22, 44, 66, 88]`
+//
+// Execute `rustlings hint move_semantics2` or use the `hint` watch subcommand
+// for a hint.
 
 fn main() {
     let mut vec0 = Vec::new();

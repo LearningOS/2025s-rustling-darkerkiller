@@ -8,7 +8,9 @@
 // Execute `rustlings hint modules3` or use the `hint` watch subcommand for a
 // hint.
 
-// 补全 use 语句，同时引入 SystemTime 和 UNIX_EPOCH
+// I AM NOT DONE
+
+// TODO: Complete this use statement
 use std::time::{SystemTime, UNIX_EPOCH};
 
 fn main() {

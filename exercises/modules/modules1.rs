@@ -3,6 +3,7 @@
 // Execute `rustlings hint modules1` or use the `hint` watch subcommand for a
 // hint.
 
+// I AM NOT DONE
 mod sausage_factory {
     // 明确声明为私有函数，外部模块无法访问
     fn get_secret_recipe() -> String {

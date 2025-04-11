@@ -7,6 +7,8 @@
 // Execute `rustlings hint modules2` or use the `hint` watch subcommand for a
 // hint.
 
+// I AM NOT DONE
+
 mod delicious_snacks {
     // 添加 pub 关键字，使引入的常量可被外部访问
     pub use self::fruits::PEAR as fruit;
