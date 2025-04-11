@@ -11,12 +11,10 @@ struct Point {
 fn main() {
     let y: Option<Point> = Some(Point { x: 100, y: 200 });
 
-    if let Some(p) = y {
-        println!("Co-ordinates are {},{} ", p.x, p.y);
-    } else {
-        println!("No valid point provided.");
+    match y {
+        Some(p) => println!("Co-ordinates are {},{} ", p.x, p.y),
+        None => println!("No valid point provided."),
     }
-    // 若想保留 y 变量后续使用，可在这里添加相应逻辑
-    let _ = y; 
+    let _ = y;
 }
     

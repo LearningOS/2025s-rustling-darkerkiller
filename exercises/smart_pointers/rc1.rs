@@ -1,17 +1,3 @@
-// rc1.rs
-//
-// In this exercise, we want to express the concept of multiple owners via the
-// Rc<T> type. This is a model of our solar system - there is a Sun type and
-// multiple Planets. The Planets take ownership of the sun, indicating that they
-// revolve around the sun.
-//
-// Make this code compile by using the proper Rc primitives to express that the
-// sun has multiple owners.
-//
-// Execute `rustlings hint rc1` or use the `hint` watch subcommand for a hint.
-
-// I AM NOT DONE
-
 use std::rc::Rc;
 
 #[derive(Debug)]
@@ -98,4 +84,4 @@ fn main() {
     println!("reference count = {}", Rc::strong_count(&sun)); // 1 reference
 
     assert_eq!(Rc::strong_count(&sun), 1);
-}
+}    

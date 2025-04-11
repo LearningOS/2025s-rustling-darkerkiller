@@ -3,30 +3,26 @@
 // Execute `rustlings hint move_semantics1` or use the `hint` watch subcommand
 // for a hint.
 
-// 此函数用于向传入的向量中添加元素并返回该向量
-fn fill_vec(mut vec: Vec<i32>) -> Vec<i32> {
-    // 向向量中添加元素
-    vec.push(22);
-    vec.push(44);
-    vec.push(66);
+// move_semantics1.rs
+//
+// Alternative implementation creating vector inside the function
 
-    // 返回填充后的向量
+fn fill_vec() -> Vec<i32> {
+    // Create and initialize vector directly
+    let mut vec = vec![22, 44, 66];
     vec
 }
 
 fn main() {
-    // 创建一个空的整数向量
-    let vec0 = Vec::new();
+    // Get filled vector from function
+    let mut vec1 = fill_vec();
 
-    // 调用 fill_vec 函数填充向量，并将结果赋值给 vec1
-    let mut vec1 = fill_vec(vec0);
-
-    // 打印 vec1 的长度和内容
+    // Print vec1's length and content
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 
-    // 向 vec1 中再添加一个元素
+    // Add one more element
     vec1.push(88);
 
-    // 再次打印 vec1 的长度和内容
+    // Print vec1's length and content again
     println!("{} has length {} content `{:?}`", "vec1", vec1.len(), vec1);
 }    
