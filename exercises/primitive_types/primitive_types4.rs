@@ -21,5 +21,5 @@ fn slice_out_of_array() {
 
     // 修正比较方式，将数组转换为切片进行比较
     assert_eq!(&[2, 3, 4][..], nice_slice);
-}
+}    
     

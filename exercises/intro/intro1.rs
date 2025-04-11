@@ -13,7 +13,6 @@
 // Execute `rustlings hint intro1` or use the `hint` watch subcommand for a
 // hint.
 
-
 fn main() {
     println!("Hello and");
     println!(r#"       welcome to...                      "#);
@@ -37,4 +36,4 @@ fn main() {
         "If you want to use rust-analyzer, Rust's LSP implementation, make sure your editor is set"
     );
     println!("up, and then run `rustlings lsp` before continuing.")
-}
+}    
