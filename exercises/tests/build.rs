@@ -2,13 +2,11 @@
 //!
 //! You should modify this file to make both exercises pass.
 
-use std::time::{SystemTime, UNIX_EPOCH};
-
 fn main() {
-    // For tests7: Set TEST_FOO to the current timestamp
-    let timestamp = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .expect("Time went backwards")
+    // For tests7: Set the environment variable TEST_FOO to the timestamp
+    let timestamp = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
         .as_secs();
     println!("cargo:rustc-env=TEST_FOO={}", timestamp);
 

@@ -3,8 +3,6 @@
 // Execute `rustlings hint clippy2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 // Using match
 fn main() {
     let mut res = 42;

@@ -4,8 +4,6 @@
 //
 // Execute `rustlings hint clippy3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
-
 fn main() {
     let _my_option: Option<()> = None;  // Added underscore prefix since we don't use it
     if _my_option.is_none() {

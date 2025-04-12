@@ -7,6 +7,7 @@
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
 // hint.
 
+
 #[derive(Debug)]
 struct Person {
     name: String,
